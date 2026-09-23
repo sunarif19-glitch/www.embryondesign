@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>Embryon Design | Create Your Happy Space</title>
+    <style>
+        :root {
+            --bg-color: #0b0d10;
+            --card-bg: #141820;
+            --accent: #d4af37;
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+            --transition: all 0.3s ease;
+            box-sizing: border-box;
+            padding-top: env(safe-area-inset-top, 0px);
+            padding-bottom: env(safe-area-inset-bottom, 0px);
+        }
+
+        html { scroll-padding-top: env(safe-area-inset-top, 0px); }
+
+        body {
+            font-family: 'Playfair Display', serif, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 5%;
+            padding-top: calc(1.5rem + env(safe-area-inset-top, 0px));
+            background: rgba(11, 13, 16, 0.9);
+            position: fixed;
+            width: 90%;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        .logo {
+            font-size: 1.4rem;
+            font-weight: bold;
+            letter-spacing: 3px;
+            color: var(--accent);
+            text-transform: uppercase;
+        }
+
+        nav a {
+            color: var(--text-main);
+            text-decoration: none;
+            margin-left: 2rem;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            transition: var(--transition);
+        }
+
+        nav a:hover { color: var(--accent); }
+
+        .hero {
+            min-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: linear-gradient(rgba(11,13,16,0.7), rgba(11,13,16,0.9)),
+                repeating-linear-gradient(135deg, #141820 0px, #141820 40px, #171c25 40px, #171c25 80px);
+            padding: 0 1rem;
+            margin-top: 76px;
+        }
+
+        .hero h1 { font-size: 3.5rem; margin-bottom: 1rem; letter-spacing: 2px; }
+        .hero h1 span { color: var(--accent); }
+        .hero p { font-size: 1.15rem; color: var(--text-muted); max-width: 650px; margin-bottom: 2rem; font-family: sans-serif; }
+
+        .btn {
+            background-color: var(--accent);
+            color: #0b0d10;
+            padding: 0.8rem 2.2rem;
+            border: none;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            font-size: 0.85rem;
+            display: inline-block;
+        }
+
+        .btn:hover { background-color: #e6c555; transform: translateY(-2px); }
+
+        .container { max-width: 1200px; margin: 5rem auto; padding: 0 2rem; }
+
+        .section-title { text-align: center; margin-bottom: 3rem; }
+        .section-title h2 { font-size: 2.3rem; letter-spacing: 1px; margin-bottom: 0.5rem; }
+        .section-title p { color: var(--accent); text-transform: uppercase; letter-spacing: 3px; font-size: 0.8rem; font-family: sans-serif; }
+
+        .filter-buttons { display: flex; justify-content: center; gap: 1rem; margin-bottom: 2.5rem; flex-wrap: wrap; }
+
+        .filter-btn {
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.15);
+            color: var(--text-muted);
+            padding: 0.6rem 1.4rem;
+            cursor: pointer;
+            transition: var(--transition);
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+            font-family: sans-serif;
+        }
+
+        .filter-btn.active, .filter-btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            background: rgba(212, 175, 55, 0.05);
+        }
+
+        .portfolio-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
+
+        .portfolio-card {
+            background: var(--card-bg);
+            border-radius: 4px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: var(--transition);
+        }
+
+        .portfolio-card:hover { transform: translateY(-5px); border-color: rgba(212, 175, 55, 0.4); }
+
+        .portfolio-img {
+            height: 220px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: sans-serif;
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: rgba(212, 175, 55, 0.55);
+            background:
+                linear-gradient(135deg, rgba(212,175,55,0.08), transparent 60%),
+                repeating-linear-gradient(45deg, #171c25 0px, #171c25 30px, #1b212b 30px, #1b212b 60px);
+        }
+
+        .portfolio-info { padding: 1.5rem; }
+        .portfolio-info h3 { margin: 0 0 0.5rem 0; font-size: 1.25rem; }
+        .portfolio-info span { color: var(--accent); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1.5px; font-family: sans-serif; }
+
+        .workflow-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; margin-top: 2rem; }
+
+        .workflow-card {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 6px;
+            border-top: 3px solid var(--accent);
+            text-align: center;
+        }
+
+        .workflow-card h4 { margin-top: 0; font-size: 1.1rem; letter-spacing: 1px; }
+        .workflow-card p { color: var(--text-muted); font-size: 0.9rem; font-family: sans-serif; margin-bottom: 0; }
+
+        .estimator-section {
+            background: var(--card-bg);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            padding: 3rem;
+            border-radius: 6px;
+        }
+
+        .estimator-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; }
+
+        @media(max-width: 768px) {
+            .estimator-grid { grid-template-columns: 1fr; }
+            .hero h1 { font-size: 2.3rem; }
+            .estimator-section { padding: 1.75rem; }
+            .container { padding: 0 1.25rem; }
+        }
+
+        .form-group { margin-bottom: 1.5rem; }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-family: sans-serif;
+        }
+
+        .form-group select, .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 0.85rem;
+            background: #0b0d10;
+            border: 1px solid rgba(255,255,255,0.1);
+            color: #fff;
+            border-radius: 4px;
+            font-size: 0.95rem;
+            font-family: sans-serif;
+            box-sizing: border-box;
+        }
+
+        .estimate-result {
+            background: #0b0d10;
+            padding: 2rem;
+            border-radius: 4px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            border: 1px dashed var(--accent);
+        }
+
+        .estimate-result h3 { color: var(--text-muted); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem; font-family: sans-serif; }
+        .price-tag { font-size: 2.4rem; color: var(--accent); font-weight: bold; margin: 1rem 0; }
+
+        .contact-section { background: var(--card-bg); padding: 3rem; border-radius: 6px; border: 1px solid rgba(255,255,255,0.05); }
+
+        .success-message {
+            display: none;
+            background: rgba(40, 167, 69, 0.2);
+            border: 1px solid #28a745;
+            color: #28a745;
+            padding: 1rem;
+            border-radius: 4px;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            font-family: sans-serif;
+        }
+
+        .testimonial-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
+
+        .testimonial-card {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 6px;
+            border: 1px solid rgba(255,255,255,0.05);
+            font-style: italic;
+        }
+
+        .testimonial-card p { color: var(--text-muted); font-family: sans-serif; font-size: 0.95rem; line-height: 1.6; }
+        .testimonial-card h5 { color: var(--accent); margin-top: 1.5rem; margin-bottom: 0; font-style: normal; font-size: 1rem; letter-spacing: 1px; }
+
+        footer {
+            text-align: center;
+            padding: 3rem;
+            padding-bottom: calc(3rem + env(safe-area-inset-bottom, 0px));
+            background: #07090b;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            margin-top: 5rem;
+            font-family: sans-serif;
+            letter-spacing: 1px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">Embryon Design</div>
+        <nav>
+            <a href="#portfolio">Portfolio</a>
+            <a href="#process">Process</a>
+            <a href="#estimator">Calculator</a>
+            <a href="#contact">Contact</a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <h1>Create Your <span>Happy Space</span></h1>
+        <p>Specialized architectural space planning, luxury duplex styling, and modern interior execution across Bangladesh.</p>
+        <a href="#estimator" class="btn">Calculate Project Cost</a>
+    </section>
+
+    <div class="container" id="portfolio">
+        <div class="section-title">
+            <p>Our Creative Works</p>
+            <h2>Featured Projects</h2>
+        </div>
+
+        <div class="filter-buttons">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="duplex">Duplex & Villa</button>
+            <button class="filter-btn" data-filter="apartment">Apartment</button>
+            <button class="filter-btn" data-filter="commercial">Commercial</button>
+        </div>
+
+        <div class="portfolio-grid" id="portfolioGrid"></div>
+    </div>
+
+    <div class="container" id="process">
+        <div class="section-title">
+            <p>How We Work</p>
+            <h2>Our Design Process</h2>
+        </div>
+        <div class="workflow-grid">
+            <div class="workflow-card">
+                <h4>01. Consultation</h4>
+                <p>We discuss your vision, lifestyle requirements, and overall spatial goals.</p>
+            </div>
+            <div class="workflow-card">
+                <h4>02. 3D Planning</h4>
+                <p>Our architects create immersive 3D visual layouts of your exact floor plan.</p>
+            </div>
+            <div class="workflow-card">
+                <h4>03. Material Selection</h4>
+                <p>Choose top-tier woods, marbles, and finishes customized to your budget.</p>
+            </div>
+            <div class="workflow-card">
+                <h4>04. Execution</h4>
+                <p>On-site supervision and flawless building until your dream space is ready.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="container" id="estimator">
+        <div class="estimator-section">
+            <div class="section-title" style="margin-bottom: 2rem;">
+                <p>Transparent Budgeting</p>
+                <h2>Project Cost Estimator</h2>
+            </div>
+
+            <div class="estimator-grid">
+                <div>
+                    <div class="form-group">
+                        <label>Project Type</label>
+                        <select id="propType">
+                            <option value="duplex">Duplex / Villa Architecture & Interior</option>
+                            <option value="apartment">Full Apartment Interior</option>
+                            <option value="commercial">Commercial / Office Space</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Approx. Size (Square Feet)</label>
+                        <input type="number" id="sqft" value="2000" min="500" max="15000">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Design Quality & Finishes</label>
+                        <select id="finishTier">
+                            <option value="standard">Contemporary Standard</option>
+                            <option value="luxury">Premium Luxury (Wood & Veneer)</option>
+                            <option value="ultra">Bespoke High-End Custom</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="estimate-result">
+                    <h3>Estimated Investment (BDT)</h3>
+                    <div class="price-tag" id="priceDisplay">৳ 2,000,000</div>
+                    <p style="font-size: 0.75rem; color: var(--text-muted); font-family: sans-serif;">*Includes layout planning, 3D visualizations, material execution, and site supervision.</p>
+                    <a href="#contact" class="btn" style="margin-top: 1rem; font-size: 0.75rem; padding: 0.6rem 1.5rem;">Book Consultation</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="section-title">
+            <p>Client Words</p>
+            <h2>Trusted By Homeowners</h2>
+        </div>
+        <div class="testimonial-grid">
+            <div class="testimonial-card">
+                <p>"Embryon Design turned our empty duplex into an absolute masterpiece. Their attention to space utilization and lighting is top-notch."</p>
+                <h5>— Tanvir Ahmed, Gulshan</h5>
+            </div>
+            <div class="testimonial-card">
+                <p>"Transparent timelines and amazing 3D execution. They truly understand modern aesthetics while keeping family comfort in mind."</p>
+                <h5>— Nusrat Jahan, Uttara</h5>
+            </div>
+        </div>
+    </div>
+
+    <div class="container" id="contact">
+        <div class="contact-section">
+            <div class="section-title" style="margin-bottom: 2rem;">
+                <p>Get In Touch</p>
+                <h2>Start Your Project</h2>
+            </div>
+
+            <div id="successAlert" class="success-message">
+                Thank you! Your inquiry has been received. Our team will contact you shortly.
+            </div>
+
+            <form id="contactForm">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+                    <div class="form-group">
+                        <label>Your Full Name</label>
+                        <input type="text" id="userName" required placeholder="e.g. Rahim Chowdhury">
+                    </div>
+                    <div class="form-group">
+                        <label>Phone Number (BD)</label>
+                        <input type="tel" id="userPhone" required placeholder="e.g. +880 1700 000000">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Project Details / Location</label>
+                    <textarea id="userMsg" rows="4" required placeholder="Tell us about your space, property size, or specific requirements..."></textarea>
+                </div>
+                <button type="submit" class="btn" style="width: 100%;">Submit Inquiry</button>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Embryon Design. All Rights Reserved. Create your happy space.</p>
+    </footer>
+
+    <script>
+        const projects = [
+            { title: "Dinajpur Modern Duplex Villa", category: "duplex", tag: "Duplex Architecture" },
+            { title: "Gulshan Luxury Living Suite", category: "apartment", tag: "Apartment Interior" },
+            { title: "Dhaka Executive Office Lounge", category: "commercial", tag: "Commercial Space" },
+            { title: "Uttara Premium Master Bedroom", category: "apartment", tag: "Bedroom Design" },
+            { title: "Sylhet Contemporary Duplex Hall", category: "duplex", tag: "Duplex Interior" },
+            { title: "Banani Boutique Commercial Hub", category: "commercial", tag: "Commercial Build" }
+        ];
+
+        function renderPortfolio(filter) {
+            const grid = document.getElementById('portfolioGrid');
+            grid.innerHTML = '';
+            const filtered = filter === 'all' ? projects : projects.filter(p => p.category === filter);
+            filtered.forEach(project => {
+                const card = document.createElement('div');
+                card.className = 'portfolio-card';
+                card.innerHTML = `
+                    <div class="portfolio-img">${project.tag}</div>
+                    <div class="portfolio-info">
+                        <span>${project.tag}</span>
+                        <h3>${project.title}</h3>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                renderPortfolio(this.dataset.filter);
+            });
+        });
+
+        function calculateEstimate() {
+            const type = document.getElementById('propType').value;
+            const sqft = parseFloat(document.getElementById('sqft').value) || 0;
+            const tier = document.getElementById('finishTier').value;
+
+            let ratePerSqFt = 1000;
+
+            if (type === 'duplex') {
+                if (tier === 'standard') ratePerSqFt = 950;
+                if (tier === 'luxury') ratePerSqFt = 1600;
+                if (tier === 'ultra') ratePerSqFt = 2600;
+            } else if (type === 'apartment') {
+                if (tier === 'standard') ratePerSqFt = 850;
+                if (tier === 'luxury') ratePerSqFt = 1400;
+                if (tier === 'ultra') ratePerSqFt = 2300;
+            } else if (type === 'commercial') {
+                if (tier === 'standard') ratePerSqFt = 800;
+                if (tier === 'luxury') ratePerSqFt = 1300;
+                if (tier === 'ultra') ratePerSqFt = 2100;
+            }
+
+            let total = sqft * ratePerSqFt;
+            document.getElementById('priceDisplay').innerText = '৳ ' + total.toLocaleString();
+        }
+
+        document.getElementById('propType').addEventListener('change', calculateEstimate);
+        document.getElementById('sqft').addEventListener('input', calculateEstimate);
+        document.getElementById('finishTier').addEventListener('change', calculateEstimate);
+
+        document.getElementById('contactForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const alertBox = document.getElementById('successAlert');
+            alertBox.style.display = 'block';
+            document.getElementById('contactForm').reset();
+            setTimeout(() => { alertBox.style.display = 'none'; }, 6000);
+        });
+
+        renderPortfolio('all');
+        calculateEstimate();
+    </script>
+</body>
+</html>
